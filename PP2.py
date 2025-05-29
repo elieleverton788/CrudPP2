@@ -79,7 +79,7 @@ def excluir_contato(contatos):
     nome_especifico = input("Digite o nome do contato desejado")
     for contato in contatos:
         nome,telefone,email = contato
-        if nome_especifico == nome_especifico:
+        if nome == nome_especifico:
             print(f"Nome {nome} telefone {telefone}, Email {email}")
             excluir_contato = input('para excluir o contato, digite 1 ou 0 para ignorar')
             excluir_contato = int(excluir_contato)
@@ -88,40 +88,46 @@ def excluir_contato(contatos):
             print(f'telefone com nome desejado {nome_especifico} excluida')
         else:
             print(f'contato com nome {nome_especifico} não encontrada')
-            
                
 
 
 
-
-
-
-
-
-
-
-def main():
-    contatos = []
-    opcoes = " "
    
+
+
+import json
+def salvar_dados(contatos, filename="dados.json"):
+        with open(filename, 'w') as f:
+            json.dump(contatos, f)
+  
+def carregar_dados(filename="dados.json"):
+    try:
+        with open(filename, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+    
+def main_1():
+    contatos = carregar_dados()
+    opcoes = ""
     while opcoes != "0":
         menu()
         opcoes = input("Escolha uma opção")
         if opcoes == "1":
             criar_contato(contatos)
-        if opcoes == "2":
+        elif opcoes == "2":
             lista_contatos(contatos)
-        if opcoes == "3":
+        elif opcoes == "3":
             buscar_contato(contatos)
-        if opcoes == "4":
+        elif opcoes == "4":
             editar_contato(contatos)
-        if opcoes == "5":
-            excluir_contato(contatos)
-            
-        if opcoes == "0":
+        elif opcoes == "5":
+            excluir_contato(contatos)   
+        
+        elif opcoes == "0":
             break
+        else: print("Numero invalido")
+
+if __name__ == "__main__":
+    main_1()
        
-   
-main()
-
-
