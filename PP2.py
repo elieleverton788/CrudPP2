@@ -10,6 +10,7 @@ def menu():
     5. Excluir contato
     6. Listar grupos
     7. Criar grupo
+    8. Excluir grupo
     0. Sair
     ''')
 
@@ -100,6 +101,21 @@ def excluir_contato(contatos):
                 return
     print("Contato não encontrado.")
 
+def excluir_grupo(grupos, contatos):
+    nome_grupo = input("Digite o nome do grupo que deseja excluir: ")
+    if nome_grupo in grupos:
+        confirmar = input(f"Tem certeza que deseja excluir o grupo '{nome_grupo}'? Digite 1 para confirmar ou 0 para cancelar: ")
+        if confirmar == "1":
+            grupos.remove(nome_grupo)
+            for contato in contatos:
+                if contato["grupo"] == nome_grupo:
+                    contato["grupo"] = ""
+            print(f"Grupo '{nome_grupo}' excluído com sucesso!")
+        else:
+            print("Exclusão cancelada.")
+    else:
+        print("Grupo não encontrado.")
+
 import json
 
 def salvar_dados(contatos, grupos, filename="dados.json"):
@@ -134,6 +150,8 @@ def main():
             listar_grupos(grupos)
         elif opcoes == "7":
             criar_grupo(grupos)
+        elif opcoes == "8":
+            excluir_grupo(grupos, contatos)
         elif opcoes == "0":
             salvar_dados(contatos, grupos)
             print("Saindo e salvando os dados...")
@@ -143,8 +161,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
